@@ -7,6 +7,11 @@
 - Real-time subscriptions (planned: live community feed updates)
 - Env vars: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 
+### Edge Functions
+| Function | File | Purpose |
+|---|---|---|
+| `delete-account` | `supabase/functions/delete-account/index.ts` | Deletes the caller's `auth.users` record using the service role key. Called by `doDeleteAccount()` in `profile.tsx` after all data rows are deleted. Requires `SUPABASE_SERVICE_ROLE_KEY` set in Supabase dashboard → Project Settings → Edge Functions. **Must be deployed via `supabase functions deploy delete-account` before launch.** |
+
 ## RevenueCat (`src/lib/revenuecat.ts`)
 - Subscription offerings fetched on app launch
 - Purchase flow triggered from the paywall screen

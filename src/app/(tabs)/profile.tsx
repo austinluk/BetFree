@@ -215,7 +215,6 @@ export default function ProfileScreen() {
 
   async function doDeleteAccount() {
     if (!profile) return;
-    // Delete all user data rows — auth.users record requires admin API (server-side)
     await Promise.all([
       supabase.from('checkins').delete().eq('user_id', profile.id),
       supabase.from('streaks').delete().eq('user_id', profile.id),
@@ -226,6 +225,15 @@ export default function ProfileScreen() {
       supabase.from('trigger_journal').delete().eq('user_id', profile.id),
     ]);
     await supabase.from('profiles').delete().eq('id', profile.id);
+
+    // Delete the auth.users record via Edge Function (requires service role — cannot be done client-side)
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      await supabase.functions.invoke('delete-account', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+    }
+
     await supabase.auth.signOut();
     resetUser();
     resetStreak();

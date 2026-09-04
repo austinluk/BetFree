@@ -4,7 +4,7 @@
 
 | Layer | Technology | Purpose |
 |---|---|---|
-| Mobile Framework | React Native (Expo ~54) | Cross-platform iOS/Android/Web |
+| Mobile Framework | React Native (Expo ~54.0.0) | Cross-platform iOS/Android/Web |
 | Language | TypeScript 5.9 | Type safety throughout |
 | Backend/DB | Supabase (PostgreSQL + Auth) | Auth, real-time data, RLS security |
 | Navigation | Expo Router 6 | File-based routing (like Next.js) |
